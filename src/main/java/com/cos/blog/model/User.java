@@ -11,7 +11,16 @@ import javax.persistence.Id;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+
+@Data  //get set
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder //빌더 패턴
 @Entity //User 클래스가 Mysql 에 테이블 생성 된다.
 public class User {
 	

@@ -14,6 +14,15 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data  //get set
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder //빌더 패턴
 @Entity
 public class Board {
 	
