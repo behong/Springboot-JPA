@@ -1,6 +1,7 @@
 package com.cos.blog.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -43,6 +45,9 @@ public class Board {
 	@ManyToOne  //Many = Board User = one   한명은 여러 게시글(Board)을 작성할 수 있다..
 	@JoinColumn(name="userId")
 	private User user;  //db는 오브젝트를 저장할 수없다. FK 자바는 오브젝트를 저장할 수 있다.
+	
+	@OneToMany(mappedBy = "board") // 하나의 Board에 여러개 Reply(답변) .. // map 연관관계의 주인이 아니다 FK아니다
+	private List<Reply> reply;
 	
 	@CreationTimestamp
 	private Timestamp createDate;
