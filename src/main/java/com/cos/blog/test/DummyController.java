@@ -8,14 +8,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.model.RoleType;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.UserRepository;
+
 
 // html 이 아니라 Data를 리턴해주는 컨트롤러
 @RestController
@@ -47,6 +51,27 @@ public class DummyController {
 		//  user 오브젝트를 json 으로 변환하여 브라우저에게 전달함
 		return user;
 	}
+	// email, password //json 으로 req 받기
+	// json 요청을 -> 자바 오브젝트로 변환하여 받아줌 Jackson 이 ㅎㅎㅎ(MessageConverter)
+	@Transactional //함수종료시 자동으로 커밋
+	@PutMapping("/dummy/user/{id}")
+	public User updateUser(@PathVariable int id, @RequestBody User requestUser) {
+		System.out.println("id :" +id );
+		System.out.println("email :" +requestUser.getEmail() );
+		System.out.println("password :" +requestUser.getPassword() );
+		
+		User user = userRepository.findById(id).orElseThrow(()->{
+			return new IllegalArgumentException("수정 실패 하였습니다. id : " + id );
+		});
+		//영속성 ,더티채킹
+		// 객체 변경
+		user.setPassword(requestUser.getPassword());
+		user.setEmail(requestUser.getEmail());
+		
+		
+		//userRepository.save(user);
+		return null;
+	}
 	
 	// 요청 url : http://localhostL8000/blog/dummy/user
 	@GetMapping("/dummy/user")
@@ -56,8 +81,13 @@ public class DummyController {
 	
 	// 한페이지당 2건 데이터를 리턴
 	@GetMapping("/dummy/user/page")
-	public Page<User> pagelist(@PageableDefault(size=2,sort="id",direction =Sort.Direction.DESC ) Pageable pageable){
-		Page<User> users= userRepository.findAll(pageable);
+	public List<User> pagelist(@PageableDefault(size=2,sort="id",direction =Sort.Direction.DESC ) Pageable pageable){
+		Page<User> pagingUser= userRepository.findAll(pageable);
+		// 여러가지 분기 처리 가능..
+		if( pagingUser.isLast()) {
+			
+		}
+		List<User> users = pagingUser.getContent();
 		return users;
 	}
 	
