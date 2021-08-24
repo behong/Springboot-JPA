@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,10 +70,24 @@ public class DummyController {
 		user.setPassword(requestUser.getPassword());
 		user.setEmail(requestUser.getEmail());
 		
-		
+		// @Transactional 이용으로 save 필요없음..
 		//userRepository.save(user);
-		return null;
+		return user;
 	}
+	
+	//삭제
+	@DeleteMapping("/dummy/user/{id}")
+	public String userDelete(@PathVariable int id ) {
+		
+		try {
+			userRepository.deleteById(id);	
+		} catch (EmptyResultDataAccessException e) {
+			return "삭제에 실패하였습니다. 해당 아이디 "+ id;
+		}
+		
+		return "삭제되었습니다. id : "+id;
+	}
+	
 	
 	// 요청 url : http://localhostL8000/blog/dummy/user
 	@GetMapping("/dummy/user")
