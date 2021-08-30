@@ -3,9 +3,9 @@ let index = {
 		$("#btn-save").on("click", () => { //function(){} 사용하지 않는 이유는 ()=>{} this를 바인딩하기 위해서
 			this.save();
 		});
-		$("#btn-login").on("click", () => { 
+/*		$("#btn-login").on("click", () => { 
 			this.login();
-		});		
+		});		*/
 	},
 
 	save: function() {
@@ -23,7 +23,7 @@ let index = {
 		$.ajax({
 			//회원가입 수행요청이 (100초 가정이라 해도) 아래 수행 하고 돌아온다..
 			type:"POST",
-			url: "/api/user",
+			url: "/auth/joinProcr",
 			data: JSON.stringify(data),  // http body JSON 문자열 전달
 			contentType:"application/json; charset=utf-8", // body 데이터가 어떤 타입인지
 			dataType:"json" 	//서버에서 응답이 왔을때  json 형태이면 javascript 오브젝트롤 변환한다.
@@ -36,7 +36,7 @@ let index = {
 		});  
 	},
 	
-	login: function() {
+/*	login: function() {
 		let data = {
 			username: $("#username").val(),
 			password: $("#password").val()
@@ -57,7 +57,7 @@ let index = {
 		}).fail(function(err){
 			alert(JSON.stringify(err))
 		});  
-	}	
+	}	*/
 }
 
 index.init();
