@@ -18,22 +18,22 @@
 	</form>
 	</div>
 
-	<script>
-	  $('.summernote').summernote({
-	    tabsize: 2,
-	    height: 300,
-	    toolbar: [
-	      ['style', ['style']],
-	      ['font', ['bold', 'underline', 'clear']],
-	      ['color', ['color']],
-	      ['para', ['ul', 'ol', 'paragraph']],
-	      ['table', ['table']],
-	      ['insert', ['link', 'picture', 'video']],
-	      ['view', ['fullscreen', 'codeview', 'help']]
-	    ]
-	  });
-	</script>
-
-<%@ include file="../layout/footer.jsp" %>
+<script>
+  $('.summernote').summernote({
+    tabsize: 2,
+    height: 300,
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'underline', 'clear']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link', 'picture', 'video']],
+      ['view', ['fullscreen', 'codeview', 'help']]
+    ]
+  });
+</script>
+<script src="/js/board.js"></script>
+<%@ include file="../layout/footer.jsp"%>
 
 

@@ -38,7 +38,6 @@ public class Board {
 	@Lob //대용량 데이터
 	private String content; //섬머노트 라이브러리 <html> 태그가 포함되어서 디자인 됨.
 	
-	@ColumnDefault("0")
 	private int count; //조회수
 	
 	//사용자..
