@@ -55,10 +55,13 @@ public class UserService {
 		User persistance = userRepository.findById(user.getId()).orElseThrow(()->{
 			return new IllegalArgumentException("회원 찾기 실패");
 		});
-		String rewPassword = user.getPassword(); //원문
-		String encPassword = encoder.encode(rewPassword); //해쉬
-		persistance.setPassword(encPassword);
-		persistance.setEmail(user.getEmail());
+		// oauth값이 없을때만 패스워드 수정 처리..
+		if(persistance.getOauth() == null || persistance.getOauth().equals("")) {
+			String rewPassword = user.getPassword(); //원문
+			String encPassword = encoder.encode(rewPassword); //해쉬
+			persistance.setPassword(encPassword);
+			persistance.setEmail(user.getEmail());
+		}
 		//회원수정 함수 종료시 = 서비스 종료 = 트랜잭션 종료  = commit 이 자동으로 됨
 		//영속화된 persistance 객체의 변화가 감지되면 더티채킹 되어 update 문을 날려줌
 	}
