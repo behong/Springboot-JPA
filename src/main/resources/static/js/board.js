@@ -8,7 +8,11 @@ let index = {
 		});
 		$("#btn-update").on("click", () => {
 			this.update();
+		});
+		$("#btn-reply-save").on("click", () => {
+			this.replySave();
 		});		
+				
 	},
 
 	save: function() {
@@ -75,8 +79,29 @@ let index = {
 		}).fail(function(err) {
 			alert(JSON.stringify(err))
 		});
-	}
+	},
+	
+	replySave: function() {
+		
+		let data = {
+			content: $("#reply-content").val()
+		};
+		let boardId = $("#boardId").val();
 
+		$.ajax({
+			type: "POST",
+			url: `/api/board/${boardId}/reply`,
+			data: JSON.stringify(data),  // http body JSON 문자열 전달
+			contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지
+			dataType: "json" 	//서버에서 응답이 왔을때  json 형태이면 javascript 오브젝트롤 변환한다.
+		}).done(function(resp) {
+			alert("댓글 작성 완료되었습니다.");
+			location.href = `/board/${boardId}`;
+		}).fail(function(err) {
+			alert(JSON.stringify(err))
+		});
+
+	}	
 
 }
 
