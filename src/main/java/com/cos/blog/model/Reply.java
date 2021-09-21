@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.cos.blog.dto.ReplySaveRequestDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,10 +39,11 @@ public class Reply {
 	@JoinColumn(name="boardId")
 	private Board board;
 	
-	@ManyToOne						//한명의 유저는 여러개 답변을 남길수 있다.
+	@ManyToOne	//한명의 유저는 여러개 답변을 남길수 있다.
 	@JoinColumn(name="userId")
 	private User user;
 
 	@CreationTimestamp
 	private Timestamp createDate;
+	
 }
