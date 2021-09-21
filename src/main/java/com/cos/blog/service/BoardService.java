@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.blog.dto.ReplySaveRequestDto;
 import com.cos.blog.model.Board;
-import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.repository.ReplyRepository;
@@ -67,21 +66,9 @@ public class BoardService {
 	@Transactional
 	public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto) {
 		
-		User user = userRepository.findById(replySaveRequestDto.getUserId()).orElseThrow(()->{
-			return new IllegalArgumentException("사용자 정보 읽어오기 실패");
-		});
-		
-		Board board = boardRepository.findById(replySaveRequestDto.getBoardId()).orElseThrow(()->{
-			return new IllegalArgumentException("댓글 읽어오기 실패");
-		}); //영속화
-		
-		Reply reply = Reply.builder()
-				.user(user).board(board)
-				.content(replySaveRequestDto.getContent())
-				.build();
-		
-		replyRepository.save(reply);
-		
+		// 네이티브 쿼리 사용
+		replyRepository.mSave(replySaveRequestDto.getUserId(),replySaveRequestDto.getBoardId(),replySaveRequestDto.getContent());
+
 	}
 
 }
