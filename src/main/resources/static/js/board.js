@@ -102,7 +102,21 @@ let index = {
 			alert(JSON.stringify(err))
 		});
 
-	}	
+	},
+	replyDelete: function(boardId,replyId) {
+
+		$.ajax({
+			type: "DELETE",
+			url: `/api/board/${boardId}/reply/${replyId}`,
+			dataType: "json" 	//서버에서 응답이 왔을때  json 형태이면 javascript 오브젝트롤 변환한다.
+		}).done(function(resp) {
+			alert("댓글 삭제 성공 되었습니다.");
+			location.href = `/board/${boardId}`;
+		}).fail(function(err) {
+			alert(JSON.stringify(err))
+		});
+
+	}			
 
 }
 

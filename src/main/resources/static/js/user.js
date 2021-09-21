@@ -28,9 +28,14 @@ let index = {
 			contentType:"application/json; charset=utf-8", // body 데이터가 어떤 타입인지
 			dataType:"json" 	//서버에서 응답이 왔을때  json 형태이면 javascript 오브젝트롤 변환한다.
 		}).done(function(resp){
-			alert("회원가입이 완료되었습니다.");
-			//console.log(resp);
-			location.href ="/";
+
+			if(resp.status === 500){
+				alert("회원가입이에 실패하여었습니다.");
+			}else{
+				alert("회원가입이 완료되었습니다.");
+				location.href ="/";
+			}
+			
 		}).fail(function(err){
 			alert(JSON.stringify(err))
 		});  
