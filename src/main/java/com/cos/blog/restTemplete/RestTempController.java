@@ -15,7 +15,7 @@ import com.cos.blog.restTemplete.service.RestTempleteService;
 import com.cos.blog.service.BoardService;
 
 @Controller
-public class TestController {
+public class RestTempController {
 	
  @Autowired
  RestTempleteService restTempleteService;
@@ -34,6 +34,11 @@ public class TestController {
  @GetMapping("/addHeader")
  public ResponseEntity<MemberDTO> addHeader() {
 	 return restTempleteService.addHeader();
+ }
+ 
+ @GetMapping("/list")
+ public Object[] getList() {
+	 return restTempleteService.restFindAll();
  }
  
 }

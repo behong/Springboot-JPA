@@ -1,16 +1,21 @@
 package com.cos.blog.restTemplete.service;
 
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.TypeUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.cos.blog.restTemplete.model.MemberDTO;
-
-import java.net.URI;
 
 @Service
 public class RestTempleteService {
@@ -99,4 +104,36 @@ public class RestTempleteService {
 		
 		return responseEntity;
 	}	
+	
+	public Object[] restFindAll() {
+		
+		LOGGER.info("addHeaderList start :{} " );
+		
+		URI  uri = UriComponentsBuilder
+				.fromUriString("http://localhost:8833")
+				.path("/api/server/addHeaderList")
+				.encode()
+				.build()
+				.toUri();			
+		
+		MemberDTO mem = new MemberDTO();
+		mem.setName("아빠");
+		mem.setEmail("father@email.com");
+		mem.setOrganization("nayha");
+		
+		List<Object> list = new ArrayList<>();
+		
+		list.add(mem);
+		//헤더 생성
+		RequestEntity<List<?>> requestEntity = RequestEntity
+												 .post(uri)
+												 .header("customHeader", "커스텀 헤더")
+												 .body(list);		
+		
+		RestTemplate restTemplate = new RestTemplate();
+
+		ResponseEntity<Object[]> responseEntity = restTemplate.exchange(requestEntity,Object[].class);
+		Object[] objects = responseEntity.getBody();
+		return objects;
+	}
 }
