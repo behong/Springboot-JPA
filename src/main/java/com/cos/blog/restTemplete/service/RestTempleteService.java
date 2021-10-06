@@ -117,13 +117,18 @@ public class RestTempleteService {
 				.toUri();			
 		
 		MemberDTO mem = new MemberDTO();
-		mem.setName("아빠");
+		mem.setName("아빠홍");
 		mem.setEmail("father@email.com");
 		mem.setOrganization("nayha");
+		MemberDTO mem2 = new MemberDTO();
+		mem2.setName("지유");
+		mem2.setEmail("지유@email.com");
+		mem2.setOrganization("JIU");		
 		
 		List<Object> list = new ArrayList<>();
 		
 		list.add(mem);
+		list.add(mem2);
 		//헤더 생성
 		RequestEntity<List<?>> requestEntity = RequestEntity
 												 .post(uri)
@@ -134,6 +139,8 @@ public class RestTempleteService {
 
 		ResponseEntity<Object[]> responseEntity = restTemplate.exchange(requestEntity,Object[].class);
 		Object[] objects = responseEntity.getBody();
+		
+		LOGGER.info("objects start :{} ",objects );
 		return objects;
 	}
 }
